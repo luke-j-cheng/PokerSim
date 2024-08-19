@@ -80,12 +80,9 @@ def main():
         playerhands.clear()
         board.clear()
 
-        for i in cardlist:
-            print(i)
         
-            
-        wait = input("")
-
+        
+                  
 
 if __name__ == main():
     main()
