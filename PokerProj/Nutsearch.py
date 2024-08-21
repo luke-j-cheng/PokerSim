@@ -11,8 +11,20 @@ def StraightFlush(list):
         return False
 
 def Quads(list):
-    if True:
-        return (True, score)
+    quadlist = []
+    score = []
+    newlist = set(list)
+    for i in newlist:
+        count = list.count(i)
+        if count == 4:
+            quadlist.append(i)
+    if len(quadlist) == 1:
+        newlist.remove(quadlist[0])
+        quadlist.append(max(newlist))
+    
+    
+    if len(quadlist) == 2:
+        return (True, quadlist)
     else:
         return (False, None)
 
@@ -68,7 +80,7 @@ def HighCard(list): #Will be used to break ties by entering modified hands
     for card in list:
         highcard.append(card.value)
     highest = highcard.sort(reverse=True)
-    return (True, highest)
+    return (highest)
     
 
 #Nutsearch returns a list - first value is the score of the hand, second is the value of the score (i.e. for a pair of Nines, value is [2, 9])
@@ -88,8 +100,10 @@ def nutsearch(list):
     elif Pair(list)[0]:
         pass
     else:
-        return (0, HighCard(list)[1])
+        return (0, HighCard(list))
 
 
+
+print(Quads([13, 1, 13, 13, 11, 13]))
 
 
