@@ -40,10 +40,13 @@ def FullHouse(inlist):
         num = hand.count(value)
         if num == 3:
             threelist.append(value)
+            pairlist.append(value)
         elif num == 2: 
             pairlist.append(value)
     if len(threelist) > 0 and len(pairlist) > 0:
         score.append(max(threelist))
+        if max(threelist) in pairlist:
+            pairlist.remove(max(threelist))
         score.append(max(pairlist))
         return(True, score)
     else:
@@ -51,11 +54,33 @@ def FullHouse(inlist):
 
     
 
-def Flush(list):
-    if True:
-        return (True, score)
+def Flush(inlist):
+    hand = []
+    score = []
+    value = []
+    for i in inlist:
+        hand.append(i.suit)
+    for suit in suitlist:
+        num = hand.count(suit)
+        if num >= 5:
+            score.append(num)
+            flushsuit = suit
+    if len(score) >= 1:
+        for card in inlist:
+            if card.suit == flushsuit:
+                value.append(card.value)
+        value.sort(reverse=True)
+        newval = value[:5]
+        return(True, newval)
     else:
-        return (False, None)
+        return(False, None)
+                       
+                         
+            
+        
+            
+   
+
 
 def Straight(list):
     if True:
@@ -102,12 +127,6 @@ def HighCard(list): #Will be used to break ties by entering modified hands
 
 #Nutsearch returns a list - first value is the score of the hand, second is the value of the score (i.e. for a pair of Nines, value is [2, 9])
 def nutsearch(list):
-    numlist = []
-    flushlist = []
-    for i in list:
-        numlist.append(i.value)
-    for i in list:
-        flushlist.append(i.suit)
     if StraightFlush(list)[0]:
         pass
     elif Quads(list)[0]:
@@ -127,4 +146,4 @@ def nutsearch(list):
 
 
 
-
+print(FullHouse(spadelist))

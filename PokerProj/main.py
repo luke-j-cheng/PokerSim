@@ -62,6 +62,14 @@ def main():
         print('')
         for i in board:
             print(i)
+        
+
+        for player in playerhands:
+            for card in board:
+                player.append(i)
+            print(FullHouse(player))
+        
+    
 
         ## Clears hands/board and resets cards for next game 
         ## Only if user requests to keep playing
