@@ -1,23 +1,14 @@
-list = [1, 3, 3, 4, 4, 2]
-pairlist = []
-newlist = set(list)
+inlist = [1, 3, 3, 3, 3, 4, 4, 2]
+quadlist = []
+score = []
+newlist = set(inlist)
 for i in newlist:
-    count = list.count(i)
-    if count != 1:
-        pairlist.append(count)
+    num = inlist.count(i)
+    if num == 4:
+        quadlist.append(i)
+if len(quadlist) == 1:
+    newlist.remove(quadlist[0])
+    quadlist.append(max(newlist))
 
-if max(pairlist) == 4:
-    Quad = True
-elif max(pairlist) == 3:
-    if 2 in pairlist: 
-        fullhouse = True:
-    else:
-        set = True
-elif
-    max(pairlist) == 2:
-    if len(pairlist) >= 2:
-        twopair = True
-    else: 
-        pair = True
-else:
-    False
+
+print(quadlist)

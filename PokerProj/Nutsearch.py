@@ -10,29 +10,46 @@ def StraightFlush(list):
     else:
         return False
 
-def Quads(list):
+def Quads(inlist):
+    hand = []
+    for i in inlist:
+        hand.append(i.value)
     quadlist = []
     score = []
-    newlist = set(list)
-    for i in newlist:
-        count = list.count(i)
-        if count == 4:
-            quadlist.append(i)
+    newlist = set(hand)
+    for value in newlist:
+        num = hand.count(value)
+        if num == 4:
+            quadlist.append(value)
     if len(quadlist) == 1:
         newlist.remove(quadlist[0])
         quadlist.append(max(newlist))
-    
-    
-    if len(quadlist) == 2:
         return (True, quadlist)
     else:
         return (False, None)
 
-def FullHouse(list):
-    if True:
-        return (True, score)
+def FullHouse(inlist):
+    hand = []
+    for i in inlist: 
+        hand.append(i.value)
+    threelist = []
+    pairlist = []
+    score = []
+    newlist = set(hand)
+    for value in newlist:
+        num = hand.count(value)
+        if num == 3:
+            threelist.append(value)
+        elif num == 2: 
+            pairlist.append(value)
+    if len(threelist) > 0 and len(pairlist) > 0:
+        score.append(max(threelist))
+        score.append(max(pairlist))
+        return(True, score)
     else:
-        return (False, None)
+        return(False, None)
+
+    
 
 def Flush(list):
     if True:
@@ -78,13 +95,19 @@ def Pair(list):
 def HighCard(list): #Will be used to break ties by entering modified hands 
     highcard = []
     for card in list:
-        highcard.append(card.value)
+        highcard.append(card)
     highest = highcard.sort(reverse=True)
     return (highest)
     
 
 #Nutsearch returns a list - first value is the score of the hand, second is the value of the score (i.e. for a pair of Nines, value is [2, 9])
 def nutsearch(list):
+    numlist = []
+    flushlist = []
+    for i in list:
+        numlist.append(i.value)
+    for i in list:
+        flushlist.append(i.suit)
     if StraightFlush(list)[0]:
         pass
     elif Quads(list)[0]:
@@ -103,7 +126,5 @@ def nutsearch(list):
         return (0, HighCard(list))
 
 
-
-print(Quads([13, 1, 13, 13, 11, 13]))
 
 
