@@ -81,9 +81,11 @@ def main():
         if enter.lower() == 'q':
             break
         
+
         for hand in playerhands:
             for card in hand:
-                cardlist.append(card)
+                if card not in cardlist:
+                    cardlist.append(card)
                 
 
         for card in board:

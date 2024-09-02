@@ -8,17 +8,18 @@ from hands import *
 def StraightFlush(inlist): ## Uses same search as flush, then uses straight to find any straights
     hand = []
     value = []
-    flush = False
     score = []
+    flush = 0
     for i in inlist:
         hand.append(i.suit) ## Adds every card's suit to list
     for suit in suitlist:
         num = hand.count(suit)
         if num >= 5:
-            flush = True
+            flush = 1
             flushsuit = suit ## Checks if at least 5 cards are the same suit, sets flushsuit to the suit
+            break
     
-    if flush == True:
+    if flush == 1:
         for card in inlist: 
             if card.suit == flushsuit:
                 value.append(card.value)
@@ -97,16 +98,17 @@ def FullHouse(inlist):
 def Flush(inlist): 
     hand = []
     value = []
-    flush == False
+    flush = 0
+    
     for i in inlist:
         hand.append(i.suit) ## Adds every card's suit to list
     for suit in suitlist:
         num = hand.count(suit)
         if num >= 5:
-            flush = True
+            flush = 1
             flushsuit = suit ## Checks if at least 5 cards are the same suit, sets flushsuit to the suit
-    
-    if flush == True:
+            break
+    if flush == 1:
         for card in inlist: 
             if card.suit == flushsuit:
                 value.append(card.value)
@@ -210,7 +212,7 @@ def HighCard(inlist): #Will be used to break ties by entering modified hands
 
 def nutsearch(list): # Checks possible win conditions in order of best to worst so it will always return best possible hand, (e.g. won't return pair when there's a full house)
     if StraightFlush(list)[0]:
-        pass
+        print("Straight Flush")
     elif Quads(list)[0]:
         print("Quads")
     elif FullHouse(list)[0]:
@@ -218,7 +220,7 @@ def nutsearch(list): # Checks possible win conditions in order of best to worst 
     elif Flush(list)[0]:
         print("Flush")
     elif Straight(list)[0]:
-        pass
+        print("Straight")
     elif Set(list)[0]:
         print("Set")
     elif Pair(list)[0]:
@@ -226,3 +228,4 @@ def nutsearch(list): # Checks possible win conditions in order of best to worst 
     else:
         print("HighCard")
 
+print(Flush(clublist))
