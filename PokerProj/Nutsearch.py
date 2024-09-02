@@ -5,11 +5,50 @@ from hands import *
 
 #Card Types
 
-def StraightFlush(list): 
-    if True:
-        return (False, None)
-    else:
-        return False
+def StraightFlush(inlist): ## Uses same search as flush, then uses straight to find any straights
+    hand = []
+    value = []
+    flush = False
+    score = []
+    for i in inlist:
+        hand.append(i.suit) ## Adds every card's suit to list
+    for suit in suitlist:
+        num = hand.count(suit)
+        if num >= 5:
+            flush = True
+            flushsuit = suit ## Checks if at least 5 cards are the same suit, sets flushsuit to the suit
+    
+    if flush == True:
+        for card in inlist: 
+            if card.suit == flushsuit:
+                value.append(card.value)
+        value.sort(reverse=True)
+
+        if (14) in value: ## For Ace's unique straight property (can be used as 12345 or 10JQKA)
+            value.append(1)
+        newlist = set(value)
+        for i in newlist:
+            num = i
+            count = 0
+            for i in range (5):
+                if (num - 1) in newlist:
+                    count += 1
+                    num -= 1
+                else:
+                    continue 
+            if count == 5:
+                score.append(num)
+        
+        if len(score) >= 1:
+            print("SF WIN" + str(max(score)))
+            return(True, SFWin(max(score)))
+        else:
+            return(False, None)
+
+
+    else:   
+        return(False, None)
+
 
 def Quads(inlist): 
     hand = []  ## Creates new list hand with the cards containing their numeric values (appears in many following search functions)
@@ -57,17 +96,17 @@ def FullHouse(inlist):
   
 def Flush(inlist): 
     hand = []
-    score = []
     value = []
+    flush == False
     for i in inlist:
         hand.append(i.suit) ## Adds every card's suit to list
     for suit in suitlist:
         num = hand.count(suit)
         if num >= 5:
-            score.append(num)
+            flush = True
             flushsuit = suit ## Checks if at least 5 cards are the same suit, sets flushsuit to the suit
     
-    if len(score) >= 1:
+    if flush == True:
         for card in inlist: 
             if card.suit == flushsuit:
                 value.append(card.value)
@@ -80,10 +119,31 @@ def Flush(inlist):
 
 def Straight(inlist):
     hand = []
+    score = []
     for i in inlist:
         hand.append(i.value)
     if (14) in hand: ## For Ace's unique straight property (can be used as 12345 or 10JQKA)
         hand.append(1)
+    newlist = set(hand)
+    for i in newlist:
+        num = i
+        count = 0
+        for i in range (5):
+            if (num - 1) in newlist:
+                count += 1
+                num -= 1
+            else:
+                continue 
+        if count == 5:
+            score.append(num)
+    
+    if len(score) >= 1:
+        print(max(score))
+        return(True, StraightWin(max(score)))
+    else:
+        return(False, None)
+
+
     
 
 def Set(inlist):
@@ -166,6 +226,3 @@ def nutsearch(list): # Checks possible win conditions in order of best to worst 
     else:
         print("HighCard")
 
-
-
-nutsearch(cardlist)
