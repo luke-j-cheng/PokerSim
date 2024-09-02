@@ -50,7 +50,6 @@ def StraightFlush(inlist): ## Uses same search as flush, then uses straight to f
     else:   
         return(False, None)
 
-
 def Quads(inlist): 
     hand = []  ## Creates new list hand with the cards containing their numeric values (appears in many following search functions)
     for i in inlist:
@@ -145,9 +144,6 @@ def Straight(inlist):
     else:
         return(False, None)
 
-
-    
-
 def Set(inlist):
     hand = []
     for i in inlist: 
@@ -198,34 +194,45 @@ def Pair(inlist): #Checks for both Two Pair and Pair
     else:
         return(False, None)
 
-
-
-
-
 def HighCard(inlist): #Will be used to break ties by entering modified hands 
     highcard = []
     for card in list:
         highcard.append(card)
     highest = highcard.sort(reverse=True)
     return (HighWin(highest))
-    
+
+
+
+def WinSearch(inlist):
+    handscore = []
+    for i in inlist:
+        handscore.append(i.score)
+    nuts = max(handscore)
+    if handscore.count(nuts) > 1:
+        pass ## TIEBREAKER FUNCTION
+    else:
+        winner = handscore.index(nuts)
+        hand = inlist[winner].name
+        return (winner + 1, hand)
+
+
 
 def nutsearch(list): # Checks possible win conditions in order of best to worst so it will always return best possible hand, (e.g. won't return pair when there's a full house)
     if StraightFlush(list)[0]:
-        print("Straight Flush")
+        return StraightFlush(list)[1]
     elif Quads(list)[0]:
-        print("Quads")
+        return Quads(list)[1]
     elif FullHouse(list)[0]:
-        print("Full House")
+        return FullHouse(list)[1]
     elif Flush(list)[0]:
-        print("Flush")
+        return Flush(list)[1]
     elif Straight(list)[0]:
-        print("Straight")
+        return Straight(list)[1]
     elif Set(list)[0]:
-        print("Set")
+        return Set(list)[1]
     elif Pair(list)[0]:
-        print("Pair or Twopair")
+        return Pair(list)[1]
     else:
-        print("HighCard")
+        return(HighCard(list))
 
-print(Flush(clublist))
+

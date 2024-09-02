@@ -24,6 +24,8 @@ class QuadWin(Hand):
 
 class FHWin(Hand):
     def __init__(self, high):
+        assert isinstance(high, list)
+        assert len(high) == 2
         self.name = "Full House"
         self.score = 7
         self.highnum = 2
