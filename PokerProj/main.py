@@ -1,5 +1,6 @@
 from cards import *
 from Nutsearch import *
+from hands import *
 import random
 
 def main():
@@ -63,11 +64,14 @@ def main():
         for i in board:
             print(i)
         
-
+        num = 0
         for player in playerhands:
             for card in board:
-                player.append(i)
-            print(FullHouse(player))
+                player.append(card)
+            num += 1
+            print('')
+            print("Player" + str(num) + ":")
+            nutsearch(player)
         
     
 
