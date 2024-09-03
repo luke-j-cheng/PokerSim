@@ -201,15 +201,30 @@ def HighCard(inlist): #Will be used to break ties by entering modified hands
     highest = highcard.sort(reverse=True)
     return (HighWin(highest))
 
-
+def TieBreak(inlist, number, score):
+    tielist = []
+    for i in inlist:
+        if i.score == score:
+            tielist.append(i.high)
+        else:
+            tielist.append(None)
+    
+    for i in range (number):
+        highlist = []
+        for highcards in tielist:
+            highlist.append(highcards[i])
+        
+        
+    
 
 def WinSearch(inlist):
     handscore = []
     for i in inlist:
         handscore.append(i.score)
     nuts = max(handscore)
+    winner = handscore.index(nuts)
     if handscore.count(nuts) > 1:
-        pass ## TIEBREAKER FUNCTION
+        TieBreak(inlist, inlist[winner].highnum, nuts)        
     else:
         winner = handscore.index(nuts)
         hand = inlist[winner].name
