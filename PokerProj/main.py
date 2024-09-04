@@ -80,12 +80,16 @@ def main():
 
         besthand = WinSearch(nutlist)
 
-
         if besthand[2] == False:  
             print("Player" + str(int(besthand[0])) + " wins with a " + str(besthand[1]))
         elif besthand[2] == True:
-            print("Players " + str(besthand[0]) + " wins with a higher " + str(besthand[1]))
-        
+            if len(besthand[0]) == 1:
+                print("Players " + (str(besthand[0])) + " wins with a higher " + str(besthand[1]))
+            if len(besthand[0]) > 1:
+                print("Players")
+                for i in range (len(besthand[0])):
+                    print(str(i + 1))
+                print("tie with a " + besthand[1])
         print('')
     
 
