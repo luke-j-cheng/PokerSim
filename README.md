@@ -54,4 +54,17 @@ The "nuts" in poker is referred to the best possible hand someone could have
 
 ![image](https://github.com/user-attachments/assets/edf71102-fbb2-485b-8e1c-e4ad5d42f5e4)
 
+<h3> Winsearch Function </h3>
+
+![image](https://github.com/user-attachments/assets/c72594ff-52ae-43e5-bfc5-eba7eaa373e6)
+
+<br/> This Function takes in all of the player hands and outputs the best one 
+<br/> If there is a tie, the tiebreaker function is called, which returns the winning players
+<br/> It checks all the score of each hand, finds the highest one, and returns the index of the highest scoring hand
+
+<h3> Main </h3>
+<br/> The main function consists of the card dealing, setup, etc.
+<br/> More can be viewed in the main.py file of this repository
+
+
 
