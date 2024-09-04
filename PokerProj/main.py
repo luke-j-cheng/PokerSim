@@ -65,14 +65,28 @@ def main():
             print(i)
         
         num = 0
+        nutlist = []
         for player in playerhands:
             for card in board:
                 player.append(card)
             num += 1
             print('')
             print("Player" + str(num) + ":")
-            nutsearch(player)
+            print(nutsearch(player))
+            nutlist.append(nutsearch(player))
         
+        
+        print('')
+
+        besthand = WinSearch(nutlist)
+
+
+        if besthand[2] == False:  
+            print("Player" + str(int(besthand[0])) + " wins with a " + str(besthand[1]))
+        elif besthand[2] == True:
+            print("Players " + str(besthand[0]) + " wins with a higher " + str(besthand[1]))
+        
+        print('')
     
 
         ## Clears hands/board and resets cards for next game 

@@ -197,38 +197,65 @@ def Pair(inlist): #Checks for both Two Pair and Pair
 def HighCard(inlist): #Will be used to break ties by entering modified hands 
     highcard = []
     for card in list:
-        highcard.append(card)
+        highcard.append(card.value)
     highest = highcard.sort(reverse=True)
-    return (HighWin(highest))
+    newhigh = highest[:5]
+    return (HighWin(newhigh))
+
+
+
 
 def TieBreak(inlist, number, score):
+    handlist = []
     tielist = []
     for i in inlist:
         if i.score == score:
+            handlist.append(i.high)
             tielist.append(i.high)
         else:
-            tielist.append(None)
+            handlist.append(None)
     
-    for i in range (number):
-        highlist = []
-        for highcards in tielist:
-            highlist.append(highcards[i])
+    while len(tielist) > 1:
+        hand1 = tielist[0]            
+        hand2 = tielist[1]
         
-        
-    
+        count = 0
+        for i in range (number):
+            if hand1[i] > hand2[i]:
+                tielist.remove(hand2)
+                break
+            elif hand2[i] > hand1[i]:
+                tielist.remove(hand1)
+                break
+            else:
+                count += 1
 
+            if count == (number):
+                tielist.remove(hand1)
+
+                
+    allwinners = []
+    
+    for i, x in enumerate(handlist):
+            if x == tielist[0]:
+                allwinners.append(i + 1)
+    
+    return(allwinners)                   
+    
 def WinSearch(inlist):
     handscore = []
     for i in inlist:
         handscore.append(i.score)
     nuts = max(handscore)
-    winner = handscore.index(nuts)
+    winnum = handscore.index(nuts)
+    
     if handscore.count(nuts) > 1:
-        TieBreak(inlist, inlist[winner].highnum, nuts)        
-    else:
-        winner = handscore.index(nuts)
-        hand = inlist[winner].name
-        return (winner + 1, hand)
+        winner = TieBreak(inlist, inlist[winnum].highnum, nuts)
+        hand = inlist[winnum].name
+        return(winner, hand, True)        
+    else:   
+        hand = inlist[winnum].name
+        return (winnum + 1, hand, False)
 
 
 
@@ -248,6 +275,12 @@ def nutsearch(list): # Checks possible win conditions in order of best to worst 
     elif Pair(list)[0]:
         return Pair(list)[1]
     else:
-        return(HighCard(list))
+        highcard = []
+        for card in list:
+            highcard.append(card.value)  
+        highcard.sort(reverse=True)
+        newhigh = highcard[:5]
+        return (HighWin(newhigh))
 
 
+print(WinSearch([HighWin([1,2,3,4,5]),HighWin([2,3,4,5,6])]))
