@@ -16,3 +16,12 @@
 
 ![Card Class](https://github.com/user-attachments/assets/c4b9e723-2bba-4e62-b899-b7fdfc47d530)
 <br/>I made a card parent class and child classes for each card value in a 52 card deck
+<br/> The class has 3 attributes: 
+<br/>    - The card's name
+<br/>    - The card's value 
+<br/>    - The card's suit
+<br/> Each child class has a set value for the name and value
+<br/> I used a loop to create a card of every value in a certain suit, and repeated this for all 4 suits
+<br/> Each individual card is added to the list of all cards
+
+![Screenshot 2024-09-04 110952](https://github.com/user-attachments/assets/552d0337-e23e-49aa-9c72-c8027b4c6b19)
