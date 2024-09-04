@@ -27,3 +27,12 @@
 ![Screenshot 2024-09-04 110952](https://github.com/user-attachments/assets/552d0337-e23e-49aa-9c72-c8027b4c6b19)
 
 <h3> Hand Class </h3>
+The Hand parent class consists of attributes: 
+<br/> - Name
+<br/> - Score
+<br/> - High
+<br/> - Highnum
+<br/>
+
+![Screenshot 2024-09-04 143526](https://github.com/user-attachments/assets/e397e03d-ba83-4c03-9c80-589db47efedf)
+
