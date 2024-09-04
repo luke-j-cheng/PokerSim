@@ -27,12 +27,17 @@
 ![Screenshot 2024-09-04 110952](https://github.com/user-attachments/assets/552d0337-e23e-49aa-9c72-c8027b4c6b19)
 
 <h3> Hand Class </h3>
-The Hand parent class consists of attributes: 
-<br/> - Name
-<br/> - Score
-<br/> - High
-<br/> - Highnum
-<br/>
 
 ![Screenshot 2024-09-04 143526](https://github.com/user-attachments/assets/e397e03d-ba83-4c03-9c80-589db47efedf)
+
+The Hand parent class consists of attributes: 
+<br/> - Name: Title of the hand
+<br/> - Score: The hand's score (used to calculate the best hand)
+<br/> - High: A list of the hand's highcards (used for ties)
+<br/> - Highnum: How many highcards are in the hand
+<br/>Each child class of Hand is a different way that someone could win a hand
+<br/> The child classes have fixed values for their score and highnum attribute
+
+<h3> Nutsearch Function </h3>
+
 
