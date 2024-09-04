@@ -40,4 +40,18 @@ The Hand parent class consists of attributes:
 
 <h3> Nutsearch Function </h3>
 
+![image](https://github.com/user-attachments/assets/ea1539f1-5640-48de-abec-f6d4d644f7d9)
+
+The "nuts" in poker is referred to the best possible hand someone could have
+<br/> This function goes through each player's cards plus the shared cards and returns the best hand they have
+<br/> The input is a list of objects from the card class
+<br/> The output is the best hand that the player has 
+<br/> Each conditional checks to see if the player's cards meets the criteria for each hand
+<br/> If it doens't meet the criteria, it keeps going until it returns the best possible hand
+
+<br/> Below is an example of the Full House function, which checks if the player's cards fulfill the requirements of being a full house
+<br/> All of the functions that check different hands follow a similar structure
+
+![image](https://github.com/user-attachments/assets/edf71102-fbb2-485b-8e1c-e4ad5d42f5e4)
+
 
