@@ -3,9 +3,14 @@
 from cards import *
 from hands import *
 
-#Card Types
+'''
+These first few funcitons serve to check if each player meets the criteria for the following hands
+Input: List of length 7 consisting of objects from the card class (5 shared cards, 2 unique cards per player)
+Process: Varies from function to function
+Output: Returns True if the player's cards meet the criteria, as well as the necessary score/values of the hand 
+'''
 
-def StraightFlush(inlist): ## Uses same search as flush, then uses straight to find any straights
+def StraightFlush(inlist): 
     hand = []
     value = []
     score = []
@@ -51,21 +56,21 @@ def StraightFlush(inlist): ## Uses same search as flush, then uses straight to f
         return(False, None)
 
 def Quads(inlist): 
-    hand = []  ## Creates new list hand with the cards containing their numeric values (appears in many following search functions)
+    hand = []  ## Hand stores the cards numeric values
     for i in inlist:
         hand.append(i.value)
     quadlist = []
-    newlist = set(hand) ## Creates a set of the hand (each numeric value once)
-    for value in newlist: ## Searches through each number and counts how often it appears in the hand
+    newlist = set(hand) ## Creates a set of the hand
+    for value in newlist: 
         num = hand.count(value)
         if num == 4: ## Adds number to quadlist if four of a kind
             quadlist.append(value)
     if len(quadlist) == 1: ## If there is a four of a kind, search through hand to find highest kicker (tie purposes)
         newlist.remove(quadlist[0]) 
         quadlist.append(max(newlist))
-        return (True, QuadWin(quadlist)) # If hand has 4 of a kind, returns True, the value of the quads, and the 5th highcard (tie purposes)
+        return (True, QuadWin(quadlist)) # Returns True and values
     else:
-        return (False, None) # Returns False, None if 4 of a kind NOT in hand
+        return (False, None)
 
 def FullHouse(inlist): 
     hand = [] 
@@ -84,11 +89,14 @@ def FullHouse(inlist):
             pairlist.append(value)
     if len(threelist) > 0 and len(pairlist) > 0:
         score.append(max(threelist))
+        
         if max(threelist) in pairlist:
             pairlist.remove(max(threelist)) ## Distinguishes Set from Full House
+        
         if len(pairlist) > 0:
             score.append(max(pairlist))
-            return(True, FHWin(score)) # Returns
+            return(True, FHWin(score)) # Returns True and necessary values
+        
         else:
            return(False, None) 
     else:
@@ -107,13 +115,13 @@ def Flush(inlist):
             flush = 1
             flushsuit = suit ## Checks if at least 5 cards are the same suit, sets flushsuit to the suit
             break
-    if flush == 1:
+    if flush == 1: # Gets every card in flushsuit and finds the 5 highest
         for card in inlist: 
             if card.suit == flushsuit:
                 value.append(card.value)
         value.sort(reverse=True)
-        newval = value[:5] ## Gets the highest number values of the cards that are the same as the flushsuit
-        return(True, FlushWin(newval))
+        newval = value[:5] 
+        return(True, FlushWin(newval)) #Returns 5 highest cards in flushsuit
     
     else:
         return(False, None)         
@@ -152,17 +160,17 @@ def Set(inlist):
     newlist = set(hand)
     for value in newlist:
         num = hand.count(value)
-        if num == 3:
+        if num == 3: #Finds if a value appears three times and adds it to list
             score.append(value)
             hand.remove(value)
     if len(score) == 1:
         hand.sort(reverse=True)
-        score.append(hand[:2])
+        score.append(hand[:2]) # Adds 2 highest cards
         return(True, SetWin(score))
     else:
         return(False, None)
 
-def Pair(inlist): #Checks for both Two Pair and Pair
+def Pair(inlist):
     hand = []
     pairlist = []
     
@@ -194,17 +202,49 @@ def Pair(inlist): #Checks for both Two Pair and Pair
     else:
         return(False, None)
 
-def HighCard(inlist): #Will be used to break ties by entering modified hands 
-    highcard = []
-    for card in list:
-        highcard.append(card.value)
-    highest = highcard.sort(reverse=True)
-    newhigh = highest[:5]
-    return (HighWin(newhigh))
 
 
+'''
+Input: Input is the same as above functions (list of length 7 of objects from card class)
+Process: Uses all the above functions to check if a hand is true -- in order form best to worst hand so function finds best possible hand
+Output: If a hand's criteria is met, the function returns a class of said hand with the necessary parameters (representing highcards/values)
+'''
+
+def nutsearch(list): 
+    if StraightFlush(list)[0]:
+        return StraightFlush(list)[1]
+    elif Quads(list)[0]:
+        return Quads(list)[1]
+    elif FullHouse(list)[0]:
+        return FullHouse(list)[1]
+    elif Flush(list)[0]:
+        return Flush(list)[1]
+    elif Straight(list)[0]:
+        return Straight(list)[1]
+    elif Set(list)[0]:
+        return Set(list)[1]
+    elif Pair(list)[0]:
+        return Pair(list)[1]
+    else:
+        highcard = []
+        for card in list:
+            highcard.append(card.value)  
+        highcard.sort(reverse=True)
+        newhigh = highcard[:5]
+        return (HighWin(newhigh))
 
 
+'''
+Input: Takes in a list of objects that are from the hand class, the number of highcards you need to search through, and the hand you wnat to tiebreak 
+(e.g. Hands List, 2 cards, 7 (Full House Score))
+
+Process:
+1. Checks if the card in the hand is the same as the score you want to tiebreak, adds to tielist if so (if not adds None - helps determine which player wins)
+2. Takes the first two hands in the tielist - goes through each and finds which is better until only one hand is left
+3. Finds every player number that has that hand 
+
+Output: Winning Player Numbers (list)
+'''
 def TieBreak(inlist, number, score):
     handlist = []
     tielist = []
@@ -242,45 +282,37 @@ def TieBreak(inlist, number, score):
     
     return(allwinners)                   
     
+'''
+Input: List of objects of the hand parent class (provided by nutsearch func)
+
+Process: 
+1. Finds the score for each hand
+2. Finds the best score out of all the hands and which player has it
+3. If multiple players have the best score, tiebreak is used to find out which hand is better
+
+
+Output:
+If TieBreak used, WinSearch returns the winner(s), the hand name (i.e. Three of a Kind), and True (lets us know that tiebreaker was used)
+If TieBreak ISNT used, the function returns the winner, what hand they had, and false (lets us know tiebreaker was NOT used)
+'''
+
 def WinSearch(inlist):
     handscore = []
     for i in inlist:
         handscore.append(i.score)
-    nuts = max(handscore)
-    winnum = handscore.index(nuts)
+    nuts = max(handscore) ## Finds highest scoring hand
+    winnum = handscore.index(nuts) ## Finds who has the highest scoring hand (first player to have it in list)
     
     if handscore.count(nuts) > 1:
-        winner = TieBreak(inlist, inlist[winnum].highnum, nuts)
+        winner = TieBreak(inlist, inlist[winnum].highnum, nuts) ## Runs through tiebreak if many people have same scoring hand
         hand = inlist[winnum].name
-        return(winner, hand, True)        
+        return(winner, hand, True) # Returns winner(s)
     else:   
         hand = inlist[winnum].name
-        return (winnum + 1, hand, False)
+        return (winnum + 1, hand, False) # Returns Winner if they are the only winner
 
 
 
-def nutsearch(list): # Checks possible win conditions in order of best to worst so it will always return best possible hand, (e.g. won't return pair when there's a full house)
-    if StraightFlush(list)[0]:
-        return StraightFlush(list)[1]
-    elif Quads(list)[0]:
-        return Quads(list)[1]
-    elif FullHouse(list)[0]:
-        return FullHouse(list)[1]
-    elif Flush(list)[0]:
-        return Flush(list)[1]
-    elif Straight(list)[0]:
-        return Straight(list)[1]
-    elif Set(list)[0]:
-        return Set(list)[1]
-    elif Pair(list)[0]:
-        return Pair(list)[1]
-    else:
-        highcard = []
-        for card in list:
-            highcard.append(card.value)  
-        highcard.sort(reverse=True)
-        newhigh = highcard[:5]
-        return (HighWin(newhigh))
 
 
-print(WinSearch([HighWin([1,2,3,4,5]),HighWin([2,3,4,5,6])]))
+

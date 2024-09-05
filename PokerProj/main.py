@@ -64,6 +64,8 @@ def main():
         for i in board:
             print(i)
         
+        
+        # Adds all community cards to player hands and performs nutsearch func on each hand
         num = 0
         nutlist = []
         for player in playerhands:
@@ -78,8 +80,10 @@ def main():
         
         print('')
 
-        besthand = WinSearch(nutlist)
+        besthand = WinSearch(nutlist) # Finds best hand 
 
+        # Prints different win messages based on how many players won, if tiebreak was used, if there was a tie
+        
         if besthand[2] == False:  
             print("Player" + str(int(besthand[0])) + " wins with a " + str(besthand[1]))
         elif besthand[2] == True:

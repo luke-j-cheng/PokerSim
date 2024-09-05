@@ -2,19 +2,19 @@
 
 class Card:
     def __init__(self, name, suit, value):
-        self.name = name
-        self.suit = suit
-        self.value = value
+        self.name = name # e.g. Ace, King, Ten, Four
+        self.suit = suit # Hearts, Diamonds...
+        self.value = value # How much the card is worth
         
     def __str__(self):
-        return f"{self.name} of {self.suit}"
+        return f"{self.name} of {self.suit}" #Always shows cards as 7 of Clubs, King of Hearts...
 
 
 class Ace(Card):
     def __init__(self, suit):
         self.name = "Ace"
-        self.suit = suit
-        self.value = 14
+        self.suit = suit #One ace of each suit
+        self.value = 14 # Sets all aces to value of 14
 
 class Two(Card):
     def __init__(self, suit):
@@ -93,12 +93,13 @@ spadelist = []
 clublist = []
 heartlist = []
 diamondlist = []       
-    
-suitlist = ["Spades", "Diamonds", "Hearts", "Clubs"]
+
+# Used to make all cards
+suitlist = ["Spades", "Diamonds", "Hearts", "Clubs"] 
 ranklist = [Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King]
 
-for suit in suitlist:
-    for rank in ranklist:
+for suit in suitlist: 
+    for rank in ranklist: # Makes a card of each rank in a suit
         a = rank(suit)
         if suit == "Spades":
             spadelist.append(a)
@@ -108,6 +109,6 @@ for suit in suitlist:
             heartlist.append(a)
         else:
             clublist.append(a)
-        cardlist.append(a)
+        cardlist.append(a) # Adds created card to list of all cards
 
  
